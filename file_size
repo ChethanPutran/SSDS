@@ -7,13 +7,3 @@ Size     Replication size  Path
 31.0 G   92.9 G   /ds256_2026/small_8
 
 
-executors=(1 2 4 6 8 16)
-memory_per_executor=(2 4 6 8 10)
-iterations=3
-
-
-executors=(1 2 4 6 8 16)
-memory_per_executor=(2 4 6 8 10)
-cores_per_executor=(2 4 6 8)
-
-2 

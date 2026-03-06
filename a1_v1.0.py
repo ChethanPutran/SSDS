@@ -103,7 +103,7 @@ if len(sys.argv) != 2:
 # ─────────────────────────────────────────────
 BASE_DIR            = f"hdfs:////ds256_2026/{sys.argv[1]}"   # Change to small_4, small_8, small_16 for different input sizes
 BLACKLIST_DOMAINS_DIR = "hdfs:////ds256_2026/blacklist/dest"
-FASTTEXT_MODEL_BIN  = "/home/ds256_2026/lid.176.bin" 
+FASTTEXT_MODEL_BIN  = "hdfs:////ds256_2026/lid.176.bin" 
 PARQUET_DIR         = "hdfs:////user/chethan1/outputs" # Change to your own HDFS directory
 # ─────────────────────────────────────────────
 # Configuration
@@ -222,7 +222,8 @@ def get_warc_files(base_dir):
         return [line.strip() for line in output.splitlines() if line.strip()]
     except Exception as e:
         print(f"Error listing HDFS: {e}")
-        return []
+        raise e
+        # return []
     
 
 
@@ -279,6 +280,7 @@ def process_warc_file(file_path):
             # Check stderr if the process failed
             _, stderr = process.communicate()
             print(f"Error processing {filename}: {e} | HDFS Stderr: {stderr.decode()}")
+            raise e
     finally:
         if process.stdout:
             process.stdout.close()
@@ -535,8 +537,10 @@ def step_3_extraction(input_df):
                     # Yield a tuple matching the required output schema
                     yield (row.warc_id, row.url, row.date, text)
 
-            except Exception:
+            except Exception as e:
                 # If trafilatura crashes on a malformed HTML string, skip the record
+                print(f"Error processing record {row.warc_id}: {e}")
+                raise e
                 continue
 
     # 1. Define the explicit output schema expected by Step 3
@@ -602,7 +606,7 @@ def step_4_lang_id(input_df, threshold=0.6):
     """
 
     ## start your edits here  =================
-    bc_model_path = spark.sparkContext.broadcast(FASTTEXT_MODEL_BIN)
+    # bc_model_path = spark.sparkContext.broadcast(FASTTEXT_MODEL_BIN) # Can not be imported by worker as its a c++ extension. 
     bc_threshold = spark.sparkContext.broadcast(threshold)
 
     def is_english(text):
@@ -615,7 +619,8 @@ def step_4_lang_id(input_df, threshold=0.6):
           # Cache the model at module level so each worker loads it only once
           global _ft_model
           if '_ft_model' not in globals() or _ft_model is None:
-              _ft_model = fasttext.load_model(bc_model_path.value)
+            #   _ft_model = fasttext.load_model(bc_model_path.value)
+              _ft_model = fasttext.load_model("lid.176.bin")
 
           single_line = text.replace('\n', ' ').replace('\r', ' ').strip()
           if not single_line:
@@ -623,8 +628,10 @@ def step_4_lang_id(input_df, threshold=0.6):
 
           labels, probs = _ft_model.predict(single_line, k=1)
           return labels[0] == '__label__en' and float(probs[0]) >= bc_threshold.value
-      except Exception:
-          return False
+      except Exception as e:
+          print(f"Error in language detection: {e}")
+          raise e
+        #   return False
 
     lang_udf = udf(is_english, BooleanType())
 
@@ -962,48 +969,61 @@ if __name__ == "__main__":
     
     t1 = time()
     print(f">>> Step 1 completed in {t1 - t0:.6f} seconds")
-    df_s2 = step_2_ingestion().cache()
+    df_s2 = step_2_ingestion()
     validate_step_schema(df_s2, 2)
     print("@@@S2:", df_s2.count())
     print(f">>> Step 2 completed in {time() - t1:.6f} seconds")
+    df_s2 = df_s2.persist(StorageLevel.DISK_ONLY)
+
+
     
     t2 = time()
-    df_s3 = step_3_extraction(df_s2).cache()
+    df_s3 = step_3_extraction(df_s2)
     validate_step_schema(df_s3, 3)
     print("@@@S3:", df_s3.count())
     print(f">>> Step 3 completed in {time() - t2:.6f} seconds")
+    df_s3 = df_s3.persist(StorageLevel.DISK_ONLY)
+    df_s2.unpersist() # Free up memory from Step 2 as it's no longer needed
 
     t3 = time()
-    df_s4 = step_4_lang_id(df_s3).cache()
+    df_s4 = step_4_lang_id(df_s3)
     validate_step_schema(df_s4, 4)
     print("@@@S4:", df_s4.count())
     print(f">>> Step 4 completed in {time() - t3:.6f} seconds")
+    df_s4 = df_s4.persist(StorageLevel.DISK_ONLY)
+    df_s3.unpersist() # Free up memory from Step 3 as it's no longer needed
 
 
     t4 = time()
-    df_s5a = step_5a_deduplication(df_s4).cache()
+    df_s5a = step_5a_deduplication(df_s4)
     validate_step_schema(df_s5a, 5)
     print("@@@S5a:", df_s5a.count())
     print(f">>> Step 5a completed in {time() - t4:.6f} seconds")
-
+    df_s5a = df_s5a.persist(StorageLevel.DISK_ONLY)
+    df_s4.unpersist() # Free up memory from Step 4 as it's no longer needed
 
     t4 = time()
-    df_s5b = step_5b_deduplication(df_s4).cache()
+    df_s5b = step_5b_deduplication(df_s4)
     validate_step_schema(df_s5b, 5)
     print("@@@S5b:", df_s5b.count())
     print(f">>> Step 5b completed in {time() - t4:.6f} seconds")
+    df_s5b = df_s5b.persist(StorageLevel.DISK_ONLY)
+    df_s4.unpersist() # Free up memory from Step 4 as it's no longer needed
 
+    
     t5 = time()
     df_final_a = step_6_tokenization(df_s5a)
     validate_step_schema(df_final_a, 6)
     print("@@@S6a:", df_final_a.count())
     print(f">>> Step 6a completed in {time() - t5:.6f} seconds")
+    df_s5a.unpersist() 
 
     t6 = time()
     df_final_b = step_6_tokenization(df_s5b)
     validate_step_schema(df_final_b, 6)
     print("@@@S6b:", df_final_b.count())
     print(f">>> Step 6b completed in {time() - t6:.6f} seconds")
+    df_s5b.unpersist() 
 
     spark.stop()
     t1 = time()

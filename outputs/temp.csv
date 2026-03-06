@@ -1,0 +1,2 @@
+Type,Execs,Cores,TotalCores,MemGB,Data,AppID,S1,S2,S3,S4,S5a,S5b,S6a,S6b,TotalTime,AppTimeMs,ExecRunTimeMs,Parallelism,GCms,GCRatio,ShuffleReadMs,ShuffleWriteMs,CommMs,CommRatio,ComputeMs,ComputeRatio,MemSpillMB,DiskSpillMB,PeakHeapMB,Run
+Strong,2,4,8,8,small_1,application_1772492797887_0328,53.661026,22.296365,128.975220,109.485214,139.239988,113.458203,15.965684,108.055224,692.118182,706598,3976088 0.0104 0.0050 0.9845,5.63,41460,0.0104,16077,3897.177319,19974.177319,1

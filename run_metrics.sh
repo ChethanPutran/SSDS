@@ -1,12 +1,5 @@
 #!/bin/bash
 
-############################################
-# SEQUENTIAL RESEARCH-GRADE SCALABILITY SCRIPT
-############################################
-
-MAIN_FILE="/scratch/chethan1/SSDS/scalability_study/a1_v1.0.py"
-RESULTS_FILE="scaling_results_$(date +%Y%m%d_%H%M).csv"
-echo "Type,Execs,Cores,TotalCores,MemGB,Data,AppID,S1,S2,S3,S4,S5a,S5b,S6a,S6b,TotalTime,AppTimeMs,ExecRunTimeMs,Parallelism,GCms,GCRatio,ShuffleReadMs,ShuffleWriteMs,CommMs,CommRatio,ComputeMs,ComputeRatio,MemSpillMB,DiskSpillMB,PeakHeapMB,Run" > "$RESULTS_FILE"
 ##########################################
 # FUNCTION: Extract Metrics from Event Log
 ##########################################
@@ -20,32 +13,32 @@ extract_metrics() {
         return
     fi
 
-hdfs dfs -cat "$EVENT_LOG" > temp_event_log.json 2>/dev/null
-python3 extract_metrics.py temp_event_log.json > metrics_out.txt
+    hdfs dfs -cat "$EVENT_LOG" > temp_event_log.json 2>/dev/null
+    python3 extract_metrics.py temp_event_log.json > output/metrics_out.txt
 
-local APP_TIME=$(grep "Total Application Time" metrics_out.txt | cut -d':' -f2 | xargs)
-local EXEC_RUN=$(grep "Executor Run Time" metrics_out.txt | cut -d':' -f2 | xargs)
+    local APP_TIME=$(grep "Total Application Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
+    local EXEC_RUN=$(grep "Executor Run Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
 
-local PARALLELISM=$(grep "Parallelism Factor" metrics_out.txt | cut -d':' -f2 | xargs)
+    local PARALLELISM=$(grep "Parallelism Factor" output/metrics_out.txt | cut -d':' -f2 | xargs)
 
-local GC=$(grep "GC Time" metrics_out.txt | cut -d':' -f2 | xargs)
-local GC_RATIO=$(grep "GC Ratio" metrics_out.txt | cut -d':' -f2 | xargs)
+    local GC=$(grep "GC Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
+    local GC_RATIO=$(grep "GC Ratio" output/metrics_out.txt | cut -d':' -f2 | xargs)
 
-local SHUFFLE_READ=$(grep "Shuffle Read Time" metrics_out.txt | cut -d':' -f2 | xargs)
-local SHUFFLE_WRITE=$(grep "Shuffle Write Time" metrics_out.txt | cut -d':' -f2 | xargs)
+    local SHUFFLE_READ=$(grep "Shuffle Read Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
+    local SHUFFLE_WRITE=$(grep "Shuffle Write Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
 
-local COMM=$(grep "Total Communication Time" metrics_out.txt | cut -d':' -f2 | xargs)
-local COMM_RATIO=$(grep "Communication Ratio" metrics_out.txt | cut -d':' -f2 | xargs)
+    local COMM=$(grep "Total Communication Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
+    local COMM_RATIO=$(grep "Communication Ratio" output/metrics_out.txt | cut -d':' -f2 | xargs)
 
-local COMPUTE_TIME=$(grep "Estimated Compute Time" metrics_out.txt | cut -d':' -f2 | xargs)
-local COMPUTE_RATIO=$(grep "Compute Ratio" metrics_out.txt | cut -d':' -f2 | xargs)
+    local COMPUTE_TIME=$(grep "Estimated Compute Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
+    local COMPUTE_RATIO=$(grep "Compute Ratio" output/metrics_out.txt | cut -d':' -f2 | xargs)
 
-local MEM_SPILL=$(grep "Memory Spilled" metrics_out.txt | cut -d':' -f2 | xargs)
-local DISK_SPILL=$(grep "Disk Spilled" metrics_out.txt | cut -d':' -f2 | xargs)
+    local MEM_SPILL=$(grep "Memory Spilled" output/metrics_out.txt | cut -d':' -f2 | xargs)
+    local DISK_SPILL=$(grep "Disk Spilled" output/metrics_out.txt | cut -d':' -f2 | xargs)
 
-local PEAK_HEAP=$(grep "Peak Executor Heap Memory" metrics_out.txt | cut -d':' -f2 | xargs)
+    local PEAK_HEAP=$(grep "Peak Executor Heap Memory" output/metrics_out.txt | cut -d':' -f2 | xargs)
 
-echo "${APP_TIME:-0},${EXEC_RUN:-0},${PARALLELISM:-0},${GC:-0},${GC_RATIO:-0},${SHUFFLE_READ:-0},${SHUFFLE_WRITE:-0},${COMM:-0},${COMM_RATIO:-0},${COMPUTE_TIME:-0},${COMPUTE_RATIO:-0},${MEM_SPILL:-0},${DISK_SPILL:-0},${PEAK_HEAP:-0}"
+    echo "${APP_TIME:-0},${EXEC_RUN:-0},${PARALLELISM:-0},${GC:-0},${GC_RATIO:-0},${SHUFFLE_READ:-0},${SHUFFLE_WRITE:-0},${COMM:-0},${COMM_RATIO:-0},${COMPUTE_TIME:-0},${COMPUTE_RATIO:-0},${MEM_SPILL:-0},${DISK_SPILL:-0},${PEAK_HEAP:-0}"
 }
 
 ##########################################
@@ -61,7 +54,7 @@ run_experiment() {
     local total_cores=$((num_exec * num_cores))
     local mem_overhead=$executor_memory_overhead
 
-    local LOG_FILE="${TYPE}_e${num_exec}_m${mem}_run${run_idx}.log"
+    local LOG_FILE="outputs/${TYPE}_e${num_exec}_m${mem}_run${run_idx}.log"
 
     echo "--------------------------------------------------------"
     echo "STARTING: $TYPE | Execs: $num_exec | Run: $run_idx/$iterations"
@@ -89,7 +82,7 @@ run_experiment() {
         \
         --conf spark.eventLog.logStageExecutorMetrics=true \
         --conf spark.eventLog.logBlockUpdates.enabled=true \
-        \
+        --files hdfs:///ds256_2026/lid.176.bin \
         "$MAIN_FILE" "$data_path" 2>&1 | tee "$LOG_FILE"
 
     # Extract ID and Timings
@@ -130,11 +123,15 @@ run_experiment() {
 # GLOBAL CONFIG
 # ==============================
 
+MAIN_FILE="/scratch/chethan1/SSDS/scalability_study/a1_v1.0.py"
+echo "Type,Execs,Cores,TotalCores,MemGB,Data,AppID,S1,S2,S3,S4,S5a,S5b,S6a,S6b,TotalTime,AppTimeMs,ExecRunTimeMs,Parallelism,GCms,GCRatio,ShuffleReadMs,ShuffleWriteMs,CommMs,CommRatio,ComputeMs,ComputeRatio,MemSpillMB,DiskSpillMB,PeakHeapMB,Run" > "$RESULTS_FILE"
+
+# iterations=1
 iterations=3
 executor_cores=4
 executor_memory_overhead=2   # default unless overridden
 
-RESULTS_FILE="scaling_results_$(date +%Y%m%d_%H%M).csv"
+RESULTS_FILE="outputs/scaling_results_$(date +%Y%m%d_%H%M).csv"
 
 # Clean temporary files
 rm -f temp_event_log.json metrics_out.txt
@@ -164,8 +161,9 @@ data_sizes=(
 
 ### Configuration
 strong_dataset="small_2" # 7.8 G
+# strong_dataset="small_1" 
 executors=(2 4 8 16 32) 
-executor_memory=8   # GB
+executor_memory=8  # GB
 
 ### Execution Loop
 for n in "${executors[@]}"; do
@@ -180,59 +178,59 @@ for n in "${executors[@]}"; do
     done
 done
 
-# ===========================================================
-# WEAK SCALING (Data ∝ Executors)
-# ==========================================================
+# # ===========================================================
+# # WEAK SCALING (Data ∝ Executors)
+# # ==========================================================
 
-### Mapping
-weak_executors=(2 4 8 12 16 32)
-weak_datasets=(small_1 small_2 small_4 small_6 small_8 small_16)
-executor_memory=4   # GB (fixed to isolate scaling effects)
+# ### Mapping
+# weak_executors=(2 4 8 12 16 32)
+# weak_datasets=(small_1 small_2 small_4 small_6 small_8 small_16)
+# executor_memory=4   # GB (fixed to isolate scaling effects)
 
-### Execution Loop
-for idx in "${!weak_executors[@]}"; do
-    n=${weak_executors[$idx]}
-    dataset=${weak_datasets[$idx]}
+# ### Execution Loop
+# for idx in "${!weak_executors[@]}"; do
+#     n=${weak_executors[$idx]}
+#     dataset=${weak_datasets[$idx]}
 
-    for run in $(seq 1 $iterations); do
-        run_experiment \
-            "Weak" \
-            "$n" \
-            "$executor_cores" \
-            "$executor_memory" \
-            "$dataset" \
-            "$run"
-    done
-done
+#     for run in $(seq 1 $iterations); do
+#         run_experiment \
+#             "Weak" \
+#             "$n" \
+#             "$executor_cores" \
+#             "$executor_memory" \
+#             "$dataset" \
+#             "$run"
+#     done
+# done
 
-# ==========================================================
-# MEMORY SENSITIVITY STUDY
-# ==========================================================
+# # ==========================================================
+# # MEMORY SENSITIVITY STUDY
+# # ==========================================================
 
-### Configuration
-memory_executors=16
-memory_dataset="small_8"
-memory_values=(4 6 8 10)
+# ### Configuration
+# memory_executors=16
+# memory_dataset="small_8"
+# memory_values=(4 6 8 10)
 
 
-### Execution Loop
-for mem in "${memory_values[@]}"; do
-    if [ "$mem" -le 6 ]; then
-        executor_memory_overhead=1
-    else
-        executor_memory_overhead=2
-    fi
+# ### Execution Loop
+# for mem in "${memory_values[@]}"; do
+#     if [ "$mem" -le 6 ]; then
+#         executor_memory_overhead=1
+#     else
+#         executor_memory_overhead=2
+#     fi
 
-    for run in $(seq 1 $iterations); do
-        run_experiment \
-            "MemoryStudy" \
-            "$memory_executors" \
-            "$executor_cores" \
-            "$mem" \
-            "$memory_dataset" \
-            "$run"
-    done
-done
+#     for run in $(seq 1 $iterations); do
+#         run_experiment \
+#             "MemoryStudy" \
+#             "$memory_executors" \
+#             "$executor_cores" \
+#             "$mem" \
+#             "$memory_dataset" \
+#             "$run"
+#     done
+# done
 
 # ==========================================================
 # FINAL CLEANUP
