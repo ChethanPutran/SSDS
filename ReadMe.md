@@ -1,549 +1,222 @@
-hdfs dfs -ls hdfs://ds256_2026
+# Scaling Study on Apache Spark
 
+## Project Overview
 
-### Move file to Master Node:
+This project implements a comprehensive scaling study on Apache Spark to analyze performance characteristics under various configurations. The study focuses on three primary dimensions: strong scaling, weak scaling, and memory sensitivity analysis. The experiments are designed to provide quantitative insights into Spark's behavior with varying executor counts, data sizes, and memory allocations.
 
+## Experiment Design
 
+### Scaling Dimensions
+
+#### Strong Scaling
+Fixed dataset size with increasing executor count to measure how runtime decreases with additional resources.
+
+- Dataset: 7.8 GB (small_2)
+- Executors: 2, 4, 8, 16, 32
+- Cores per executor: 4
+- Memory per executor: 8 GB
+- Expected behavior: Runtime decreases proportionally until resource contention occurs
+
+#### Weak Scaling
+Dataset size increases proportionally with executor count to maintain constant work per core.
+
+- Executors: 2, 4, 8, 12, 16, 32
+- Datasets: small_1 (3.9 GB) through small_16 (62.2 GB)
+- Cores per executor: 4
+- Memory per executor: 4 GB
+- Expected behavior: Runtime remains constant in ideal scaling scenarios
+
+#### Memory Sensitivity Analysis
+Fixed executor count and dataset size with varying memory allocations to study memory-related performance impacts.
+
+- Executors: 16
+- Dataset: 31.0 GB (small_8)
+- Memory values: 4, 6, 8, 10 GB
+- Memory overhead: 1 GB for <=6 GB, 2 GB for >6 GB
+- Expected behavior: Reduced spilling and GC overhead with increased memory until diminishing returns
+
+## Methodology
+
+### Data Description
+
+The study uses parquet files of varying sizes:
+
+| Dataset | Size | Replication Factor |
+|---------|------|-------------------|
+| small_1 | 3.9 GB | 11.7 GB |
+| small_2 | 7.8 GB | 23.4 GB |
+| small_4 | 15.7 GB | 47.0 GB |
+| small_6 | 23.4 GB | 70.1 GB |
+| small_8 | 31.0 GB | 92.9 GB |
+| small_16 | 62.2 GB | 186.5 GB |
+
+Note: Replication factor indicates HDFS replication for fault tolerance.
+
+### Experimental Control
+
+Each configuration is executed with multiple iterations (default: 3) to account for runtime variance. A 10-second cooldown period between runs ensures clean resource state and prevents interference between experiments.
+
+## Implementation Details
+
+### Core Components
+
+1. **Experiment Orchestrator** (Bash script)
+   - Manages experiment lifecycle
+   - Handles resource allocation
+   - Collects runtime metrics
+   - Parses application logs
+
+2. **Metrics Extraction** (Python)
+   - Parses Spark event logs
+   - Extracts detailed performance metrics
+   - Calculates derived metrics (GC ratio, communication ratio, etc.)
+
+### Collected Metrics
+
+| Category | Metrics |
+|----------|---------|
+| Timing | Step-wise completion times, Total execution time, Application time |
+| Resource | Parallelism, Peak heap memory, Memory spill, Disk spill |
+| Performance | GC time and ratio, Shuffle read/write time, Communication time and ratio, Compute time and ratio |
+
+### Spark Configuration
+
+Core configuration parameters:
+- Master: YARN
+- Deploy mode: client
+- Python environment: /opt/ds256_env/bin/python
+- Queue: root.ds256.team8
+- Event logging: Enabled with executor metrics
+
+## Usage Instructions
+
+### Prerequisites
+
+1. Access to the DS256 cluster
+2. Python environment with required dependencies
+3. SSH access to master node (10.24.1.10)
+4. HDFS access to data directories
+
+### Setup
+
+1. Copy the main script to the master node:
 ```bash
-scp ./scalability_study/a1_v1.0.py chethan1@10.24.1.10:/scratch/chethan1/SSDS
+scp ./scalability_study/a1_v1.0.py chethan1@10.24.1.10:/scratch/chethan1/SSDS/
 ```
 
-
-### SSH into Master Node:
+2. SSH into the master node:
 ```bash
 ssh chethan1@10.24.1.10
 ```
 
+3. Ensure data exists in HDFS at the specified paths
 
-### Move from Master's local disk to HDFS:
-```bash
-hdfs dfs -put /scratch/chethan1/SSDS/a1_v1.0.py   /user/chethan1/as1/a1_v1.0.py
-```
+### Running Experiments
 
-executors = [1,2,4,8,16]
-
-### Spark Submission Details:
-```bash
-spark-submit --master yarn \ # DO NOT CHANGE THIS
-    --deploy-mode client \ # DO NOT CHANGE THIS
-    --num-executors 1 \ # adjust this to your needs
-    --executor-cores 8 \ # adjust this to your needs (8 is the max vcores (4 physical cores) per container, you can use fewer vcores if you want)
-    --executor-memory 10g \ # adjust this to your needs (10g is the max, 2GB for Java heap and overhead combined reaches 12g per container, you can use less if you want)
-    --conf spark.yarn.queue=root.ds256.team8 \ # adjust this to your team's queue (team1, team2, ...)
-    --conf spark.pyspark.python=/opt/ds256_env/bin/python \ # DO NOT CHANGE THIS
-    --conf spark.pyspark.driver.python=/opt/ds256_env/bin/python \ # DO NOT CHANGE THIS
-    /scratch/chethan1/SSDS/a1_v1.0.py 
-```
-
-
-
-
-
-The Application ID is generated by **YARN** as soon as each `spark-submit` command successfully connects to the cluster.
-
-Here are the three ways to find it:
-
----
-
-### 1. In  Terminal (Live Output)
-
-When we run `spark-submit`, look at the logs streaming in our terminal. Look for a line that looks like this:
-
-```text
-26/03/04 10:18:36 INFO yarn.Client: Submitted application application_1712345678912_0001
-
-```
-
-* **Format:** It always starts with `application_` followed by a long timestamp and a 4-digit sequence number.
-* **Note:** Since you have a loop, you will get a **new ID** for every executor count ($1, 2, 4, 8, 16$).
-
----
-
-### 2. Using the YARN CLI
-
-If the terminal is scrolling too fast, open a second SSH session to the Master Node and run:
+Execute the scaling study script:
 
 ```bash
-yarn application -list
-
+./run_scaling_study.sh
 ```
 
-This will print a table of all currently running jobs. Our ID will be in the first column.
+The script automatically:
+- Creates output directory for logs
+- Generates timestamped result files
+- Executes all three experiment types sequentially
+- Performs multiple iterations per configuration
 
-* **Filter by your name:** `yarn application -list | grep chethan1`
+### Monitoring
 
----
+During execution, you can monitor progress through:
 
-### 3. Through the YARN Web UI
+1. **Live Terminal Output**: Watch step completion times and application IDs
+2. **Spark Web UI** (via SSH tunnel): http://localhost:4040
+3. **YARN ResourceManager**: http://10.24.1.10:8088
+4. **Spark History Server**: http://10.24.1.10:18080
 
-If we have our SSH tunnel set up (`-L 8088:localhost:8088`), then we open our browser to:
-`http://localhost:8088/cluster/apps`
-The **ID** column is the very first thing we see on the left.
+For local browser access to Spark UI:
+```bash
+ssh -L 4040:localhost:4040 -L 8088:localhost:8088 chethan1@10.24.1.10
+```
 
----
+### Output Files
 
-### Why the Application ID is important:
+Results are stored in the `outputs/` directory:
+- Log files: `outputs/{Type}_e{Execs}_m{Memory}_run{Run}.log`
+- Consolidated results: `outputs/scaling_results_{timestamp}.csv`
 
-* **Check Logs:** `yarn logs -applicationId application_1712345678912_0001`
-* **Kill a stuck job:** `yarn application -kill application_1712345678912_0001`
-* **Spark UI access:** If we visit the History Server (Port 18080), we use this ID to find the specific performance data for your 1-executor run vs. your 16-executor run.
+## Results Analysis
 
----
+### CSV Output Format
 
-### Monitor the Execution
+The results file contains detailed metrics for each run:
 
-#### A. The "Live" View (Spark Web UI)
+```
+Type,Execs,Cores,TotalCores,MemGB,Data,AppID,S1,S2,S3,S4,S5a,S5b,S6a,S6b,TotalTime,AppTimeMs,ExecRunTimeMs,Parallelism,GCms,GCRatio,ShuffleReadMs,ShuffleWriteMs,CommMs,CommRatio,ComputeMs,ComputeRatio,MemSpillMB,DiskSpillMB,PeakHeapMB,Run
+```
 
-While the script is running, Spark launches a local web server.
+### Expected Patterns
 
-* **URL:** `http://10.24.1.10:4040`
-* **What to watch:** * **Jobs Tab:** See which "Step" (Step 1, Step 2, etc.) is currently active.
-* **Stages Tab:** See if certain stages are lagging or if there is data skew.
-* **Environment Tab:** Verify that your `--num-executors 1` and `--executor-memory 10g` settings were actually applied.
+#### Strong Scaling Analysis
+- Near-linear speedup for compute-intensive operations
+- Plateau due to scheduling overhead or data skew
+- Identify optimal resource configuration for fixed data size
 
+#### Weak Scaling Analysis
+- Constant runtime indicates good scalability
+- Increasing runtime suggests communication overhead
+- Evaluate partitioning strategy effectiveness
 
+#### Memory Sensitivity Analysis
+- Decreasing spill metrics with more memory
+- GC overhead reduction up to optimal point
+- Identify memory threshold for in-memory processing
 
-#### B. The Resource View (YARN UI)
+## Troubleshooting
 
-Since you are using `--master yarn`, the YARN ResourceManager tracks the allocation of your 10GB executor.
+### Common Issues
 
-* **URL:** `http://10.24.1.10:8088`
-* **Action:** Find the application (User: `chethan1`). Click on the **ApplicationMaster** link to jump to the Spark UI mentioned above.
+1. **Container Killed (Exit Code 143)**
+   - Check memory overhead configuration
+   - Verify queue capacity with `yarn queue -status root.ds256.team8`
 
-#### C. Post-Execution Logs (YARN Logs)
+2. **Application Not Found in Logs**
+   - Ensure event log directory exists in HDFS
+   - Check spark.eventLog.enabled=true
 
-If the script crashes or you want to see the logs *after* the terminal is closed, use the YARN CLI:
+3. **Slow Execution**
+   - Monitor for excessive GC
+   - Check for data skew in stages
+   - Verify network bandwidth
+
+### Resource Monitoring Commands
 
 ```bash
-# Get the Application ID from the terminal output or YARN UI
+# Check cluster resources
+yarn node -list -showDetails
+
+# Check queue status
+yarn queue -status root.ds256.team8
+
+# View application logs
 yarn logs -applicationId <application_id>
 
+# List running applications
+yarn application -list | grep chethan1
 ```
 
-Since we are on your **local computer**, we cannot simply type `localhost:4040` into our browser because the Spark process is running on the **Master Node** in the IISc cluster, not on our laptop. To see the Spark UI and monitor the job timings from your local computer, we need to "bridge" the connection.
+## Contributing
 
----
+When extending this study:
 
-### 1. The SSH Tunneling Method (Best for Live Monitoring)
+1. Add new experiment types in the main script
+2. Include additional metrics in the extraction function
+3. Document any configuration changes
+4. Run multiple iterations for statistical significance
+5. Validate results against expected scaling patterns
 
-This is the standard way to view the Spark UI (Port 4040) or YARN UI (Port 8088) as if they were running on our own machine.
+## References
 
-Run this command in a **new terminal** on the local computer:
-
-```bash
-ssh -L 4040:localhost:4040 -L 8088:localhost:8088 chethan1@<10.24.1.10
-
-```
-
-**How it works:**
-
-* It maps port **4040** on the Master node to port **4040** on your laptop.
-* **To view it:** Open your browser and go to `http://localhost:4040`.
-
----
-
-### 2. Using the YARN UI (Port 8088)
-
-Once you have the tunnel open, go to `http://localhost:8088`.
-
-1. Find the application (it will likely be named `a1_v1.0.py`).
-2. Click on the **History** or **ApplicationMaster** link.
-3. This will show you the exact execution time for every "Job" and "Stage" in your pipeline.
-
----
-### 3. Viewing Logs After the Job Finishes
-
-If the job finishes and the terminal closes, we can still get the timings from our local machine by fetching the YARN logs:
-
-```bash
-ssh chethan1@10.24.1.10> "yarn logs -applicationId <application_id>" | grep "Total execution time"
-
-```
-
-### Summary for your Scaling Experiment
-
-Since you are testing `[1, 2, 4, 8, 16]` executors, I recommend:
-
-1. **Keep the terminal open:** Watch the `print` statements for each loop iteration.
-2. **Use the SSH Tunnel:** Keep `localhost:18080` (Spark History Server) open in your browser to compare the duration of all 5 runs side-by-side once they finish.
-
-**Would you like me to show you how to set up the SSH tunnel for the History Server (Port 18080) so you can compare all your benchmarking results at once?**
-
-
-
-Good — now we can reason quantitatively.
-
-You said:
-
-```
-Dataset size = 4 GB
-```
-
-You’re running on Apache Spark.
-
-The correct executor memory depends on **what your job does**, not just raw input size.
-
-Let’s break it down properly.
-
----
-
-# 🧠 Important: 4GB Input ≠ 4GB Memory
-
-In Spark:
-
-* Data is deserialized in memory
-* Objects expand
-* Shuffle creates additional buffers
-* Joins/groupBy require extra space
-
-Typical expansion factor:
-
-```
-2× to 4× input size
-```
-
-So:
-
-```
-4GB input → 8–16GB memory footprint (worst case)
-```
-
----
-
-# 🎯 Case 1: Simple Map / Filter / Count
-
-If your job is mostly:
-
-* map
-* filter
-* count
-
-Then working set is small.
-
-You could run safely with:
-
-```
-2–4 GB executor memory
-```
-
----
-
-# 🎯 Case 2: Heavy Shuffle / groupBy / join
-
-If you do:
-
-* groupBy
-* reduceByKey
-* joins
-* sorting
-
-Then shuffle buffers grow large.
-
-You should budget:
-
-```
-3× input / number_of_executors
-```
-
----
-
-# 🔬 Proper Way To Estimate
-
-Use this rule:
-
-```
-Executor memory ≥ (Working set per executor) × 1.5 safety factor
-```
-
----
-
-# 📊 Example Scenarios
-
-## Scenario A: 4 Executors
-
-4GB dataset split across 4 executors:
-
-```
-4GB / 4 = 1GB per executor
-```
-
-Assume 3× expansion:
-
-```
-1GB × 3 = 3GB
-```
-
-Add safety:
-
-```
-3GB × 1.5 ≈ 4.5GB
-```
-
-So:
-
-```
---executor-memory 5g
---executor.memoryOverhead 1g
-```
-
-Safe.
-
----
-
-## Scenario B: 2 Executors
-
-```
-4GB / 2 = 2GB per executor
-```
-
-Expansion:
-
-```
-2GB × 3 = 6GB
-```
-
-With safety:
-
-```
-6GB × 1.5 ≈ 9GB
-```
-
-So you need:
-
-```
---executor-memory 8g or 10g
-```
-
----
-
-
-Good question — this is exactly how you prevent container kills and failed scaling runs.
-
-To compute the **maximum executors possible in YARN**, you must look at cluster resources from Apache Hadoop YARN.
-
-We’ll do this properly and mathematically.
-
----
-
-# ✅ Step 1: Check Total Cluster Resources
-
-Run:
-
-```bash
-yarn node -list -showDetails
-```
-
-You’ll see something like:
-
-```
-Total Nodes: 5
-Node-Id         Memory-Used  Memory-Capacity  CPU-Used  CPU-Capacity
-node1           32GB         64GB             8         16
-node2           40GB         64GB             10        16
-...
-```
-
-You care about:
-
-```
-Memory-Capacity
-CPU-Capacity
-```
-
----
-
-# ✅ Step 2: Check YARN Max Container Size
-
-Run:
-
-```bash
-yarn rmadmin -getAllServiceState
-```
-
-Or check config (if allowed):
-
-```bash
-yarn getconf -confKey yarn.scheduler.maximum-allocation-mb
-```
-
-Example output:
-
-```
-16384
-```
-
-That means:
-
-```
-Max container size = 16GB
-```
-
-If your executor container (memory + overhead) exceeds this, it will be killed.
-
----
-
-# ✅ Step 3: Calculate Your Executor Container Size
-
-You are using:
-
-```
---executor-memory 10g
---executor.memoryOverhead 2g
-```
-
-So container size =
-
-```
-10 + 2 = 12GB
-```
-
----
-
-# ✅ Step 4: Compute Max Executors (Memory Constraint)
-
-If cluster total memory = 256GB usable
-
-Max executors possible (memory-wise):
-
-```
-256GB / 12GB ≈ 21 executors
-```
-
----
-
-# ✅ Step 5: Compute Max Executors (CPU Constraint)
-
-You use:
-
-```
---executor-cores 4
-```
-
-If cluster has 80 cores total:
-
-```
-80 / 4 = 20 executors
-```
-
----
-
-# 🎯 Final Maximum Executors
-
-You must take:
-
-```
-MIN(memory_limit, cpu_limit)
-```
-
-So if:
-
-```
-Memory allows 21
-CPU allows 20
-```
-
-Then:
-
-```
-Maximum safe executors = 20
-```
-
----
-
-# ✅ Step 6: Check Queue Capacity (Very Important)
-
-Since you use:
-
-```
-root.ds256.team8
-```
-
-Run:
-
-```bash
-yarn queue -status root.ds256.team8
-```
-
-Look at:
-
-```
-Capacity
-Maximum Capacity
-Used Capacity
-```
-
-If queue max capacity = 50% of cluster,
-
-Then usable memory = 256GB × 0.5 = 128GB
-
-Recompute with 128GB instead of 256GB.
-
----
-
-# 🔬 Clean Formula (Research-Grade)
-
-Let:
-
-```
-M_total = total cluster memory available to queue
-C_total = total cluster cores available to queue
-M_exec = executor_memory + memoryOverhead
-C_exec = executor_cores
-```
-
-Then:
-
-```
-Max_exec_memory = floor(M_total / M_exec)
-Max_exec_cpu    = floor(C_total / C_exec)
-
-Max_executors = min(Max_exec_memory, Max_exec_cpu)
-```
-
----
-
-# 🚀 Quick Command Checklist
-
-Run these:
-
-```bash
-yarn node -list -showDetails
-yarn queue -status root.ds256.team8
-yarn getconf -confKey yarn.scheduler.maximum-allocation-mb
-```
-
----
-
-# ⚠️ Why This Matters For You
-
-You are testing up to:
-
-```
-16 executors
-4 cores each
-10g memory
-```
-
-If cluster total cores < 64
-OR memory < 192GB
-
-You will hit:
-
-```
-Exit code 143 (container killed)
-```
-
----
-
-# 🏁 Final Answer
-
-To check maximum executors possible:
-
-1. Get total memory + cores from `yarn node -list -showDetails`
-2. Check queue capacity
-3. Divide by per-executor memory + cores
-4. Take minimum
-
----
-
-If you paste your `yarn node -list -showDetails` output, I’ll calculate your exact safe maximum executors number.
+- Spark Configuration Guide: https://spark.apache.org/docs/latest/configuration.html
+- YARN Resource Management: https://hadoop.apache.org/docs/current/hadoop-yarn/hadoop-yarn-site/YARN.html
+- Performance Tuning Guide: https://spark.apache.org/docs/latest/tuning.html
