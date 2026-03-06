@@ -9,37 +9,16 @@ extract_metrics() {
     local EVENT_LOG=$(hdfs dfs -ls /user/chethan1/spark-logs 2>/dev/null | grep "$APP_ID" | awk '{print $8}' | tail -n 1)
 
     if [ -z "$EVENT_LOG" ]; then
-        echo "0,0,0,0,0,0,0,0"
+        echo "0,0,0,0,0,0,0,0,0,0,0,0,0,0"
         return
     fi
 
     hdfs dfs -cat "$EVENT_LOG" > temp_event_log.json 2>/dev/null
-    python3 extract_metrics.py temp_event_log.json > output/metrics_out.txt
 
-    local APP_TIME=$(grep "Total Application Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
-    local EXEC_RUN=$(grep "Executor Run Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
-
-    local PARALLELISM=$(grep "Parallelism Factor" output/metrics_out.txt | cut -d':' -f2 | xargs)
-
-    local GC=$(grep "GC Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
-    local GC_RATIO=$(grep "GC Ratio" output/metrics_out.txt | cut -d':' -f2 | xargs)
-
-    local SHUFFLE_READ=$(grep "Shuffle Read Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
-    local SHUFFLE_WRITE=$(grep "Shuffle Write Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
-
-    local COMM=$(grep "Total Communication Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
-    local COMM_RATIO=$(grep "Communication Ratio" output/metrics_out.txt | cut -d':' -f2 | xargs)
-
-    local COMPUTE_TIME=$(grep "Estimated Compute Time" output/metrics_out.txt | cut -d':' -f2 | xargs)
-    local COMPUTE_RATIO=$(grep "Compute Ratio" output/metrics_out.txt | cut -d':' -f2 | xargs)
-
-    local MEM_SPILL=$(grep "Memory Spilled" output/metrics_out.txt | cut -d':' -f2 | xargs)
-    local DISK_SPILL=$(grep "Disk Spilled" output/metrics_out.txt | cut -d':' -f2 | xargs)
-
-    local PEAK_HEAP=$(grep "Peak Executor Heap Memory" output/metrics_out.txt | cut -d':' -f2 | xargs)
-
-    echo "${APP_TIME:-0},${EXEC_RUN:-0},${PARALLELISM:-0},${GC:-0},${GC_RATIO:-0},${SHUFFLE_READ:-0},${SHUFFLE_WRITE:-0},${COMM:-0},${COMM_RATIO:-0},${COMPUTE_TIME:-0},${COMPUTE_RATIO:-0},${MEM_SPILL:-0},${DISK_SPILL:-0},${PEAK_HEAP:-0}"
+    # Get CSV-ready metrics
+    python3 extract_metrics.py temp_event_log.json
 }
+
 
 ##########################################
 # CORE LOGIC: EXECUTION & EXTRACTION
@@ -102,18 +81,11 @@ run_experiment() {
 
     # Deep Metrics
     # Deep Metrics
-    local METRICS=$(extract_metrics "$APP_ID")
+    METRICS=$(extract_metrics "$APP_ID")
 
-    local APP_TIME_MS=$(echo $METRICS | cut -d',' -f1)
-    local EXEC_RUN_MS=$(echo $METRICS | cut -d',' -f2)
-    local SHUFFLE_READ_MS=$(echo $METRICS | cut -d',' -f3)
-    local SHUFFLE_WRITE_MS=$(echo $METRICS | cut -d',' -f4)
-    local COMM_TIME=$(echo $METRICS | cut -d',' -f5)
-    local COMM_RATIO=$(echo $METRICS | cut -d',' -f6)
-    local GC_TIME=$(echo $METRICS | cut -d',' -f7)
-    local PEAK_HEAP=$(echo $METRICS | cut -d',' -f8)
+    IFS=',' read -r APP_TIME_MS EXEC_RUN_MS PARALLELISM GC GC_RATIO SHUFFLE_READ_MS SHUFFLE_WRITE_MS COMM_TIME COMM_RATIO COMPUTE_TIME COMPUTE_RATIO MEM_SPILL DISK_SPILL PEAK_HEAP <<< "$METRICS"
 
-    echo "$TYPE,$num_exec,$num_cores,$total_cores,$mem,$data_path,$APP_ID,$S1,$S2,$S3,$S4,$S5A,$S5B,$S6A,$S6B,$TOTAL_TIME,$APP_TIME_MS,$EXEC_RUN_MS,$SHUFFLE_READ_MS,$SHUFFLE_WRITE_MS,$COMM_TIME,$COMM_RATIO,$GC_TIME,$PEAK_HEAP,$run_idx" >> "$RESULTS_FILE"
+    echo "$TYPE,$num_exec,$num_cores,$total_cores,$mem,$data_path,$APP_ID,$S1,$S2,$S3,$S4,$S5A,$S5B,$S6A,$S6B,$TOTAL_TIME,$APP_TIME_MS,$EXEC_RUN_MS,$PARALLELISM,$GC,$GC_RATIO,$SHUFFLE_READ_MS,$SHUFFLE_WRITE_MS,$COMM_TIME,$COMM_RATIO,$COMPUTE_TIME,$COMPUTE_RATIO,$MEM_SPILL,$DISK_SPILL,$PEAK_HEAP,$run_idx" >> "$RESULTS_FILE"
     echo "COMPLETED: $APP_ID | Time: $TOTAL_TIME sec"
     echo "Waiting 10s for cluster cleanup..."
     sleep 10  # This ensures YARN containers are fully released before next request
@@ -123,15 +95,17 @@ run_experiment() {
 # GLOBAL CONFIG
 # ==============================
 
-MAIN_FILE="/scratch/chethan1/SSDS/scalability_study/a1_v1.0.py"
-echo "Type,Execs,Cores,TotalCores,MemGB,Data,AppID,S1,S2,S3,S4,S5a,S5b,S6a,S6b,TotalTime,AppTimeMs,ExecRunTimeMs,Parallelism,GCms,GCRatio,ShuffleReadMs,ShuffleWriteMs,CommMs,CommRatio,ComputeMs,ComputeRatio,MemSpillMB,DiskSpillMB,PeakHeapMB,Run" > "$RESULTS_FILE"
-
 # iterations=1
 iterations=3
 executor_cores=4
 executor_memory_overhead=2   # default unless overridden
 
 RESULTS_FILE="outputs/scaling_results_$(date +%Y%m%d_%H%M).csv"
+
+
+MAIN_FILE="/scratch/chethan1/SSDS/scalability_study/a1_v1.0.py"
+echo "Type,Execs,Cores,TotalCores,MemGB,Data,AppID,S1,S2,S3,S4,S5a,S5b,S6a,S6b,TotalTime,AppTimeMs,ExecRunTimeMs,Parallelism,GCms,GCRatio,ShuffleReadMs,ShuffleWriteMs,CommMs,CommRatio,ComputeMs,ComputeRatio,MemSpillMB,DiskSpillMB,PeakHeapMB,Run" > "$RESULTS_FILE"
+
 
 # Clean temporary files
 rm -f temp_event_log.json metrics_out.txt
@@ -178,59 +152,59 @@ for n in "${executors[@]}"; do
     done
 done
 
-# # ===========================================================
-# # WEAK SCALING (Data ∝ Executors)
-# # ==========================================================
+# ===========================================================
+# WEAK SCALING (Data ∝ Executors)
+# ==========================================================
 
-# ### Mapping
-# weak_executors=(2 4 8 12 16 32)
-# weak_datasets=(small_1 small_2 small_4 small_6 small_8 small_16)
-# executor_memory=4   # GB (fixed to isolate scaling effects)
+### Mapping
+weak_executors=(2 4 8 12 16 32)
+weak_datasets=(small_1 small_2 small_4 small_6 small_8 small_16)
+executor_memory=4   # GB (fixed to isolate scaling effects)
 
-# ### Execution Loop
-# for idx in "${!weak_executors[@]}"; do
-#     n=${weak_executors[$idx]}
-#     dataset=${weak_datasets[$idx]}
+### Execution Loop
+for idx in "${!weak_executors[@]}"; do
+    n=${weak_executors[$idx]}
+    dataset=${weak_datasets[$idx]}
 
-#     for run in $(seq 1 $iterations); do
-#         run_experiment \
-#             "Weak" \
-#             "$n" \
-#             "$executor_cores" \
-#             "$executor_memory" \
-#             "$dataset" \
-#             "$run"
-#     done
-# done
+    for run in $(seq 1 $iterations); do
+        run_experiment \
+            "Weak" \
+            "$n" \
+            "$executor_cores" \
+            "$executor_memory" \
+            "$dataset" \
+            "$run"
+    done
+done
 
-# # ==========================================================
-# # MEMORY SENSITIVITY STUDY
-# # ==========================================================
+# ==========================================================
+# MEMORY SENSITIVITY STUDY
+# ==========================================================
 
-# ### Configuration
-# memory_executors=16
-# memory_dataset="small_8"
-# memory_values=(4 6 8 10)
+### Configuration
+memory_executors=16
+memory_dataset="small_8"
+memory_values=(4 6 8 10)
 
 
-# ### Execution Loop
-# for mem in "${memory_values[@]}"; do
-#     if [ "$mem" -le 6 ]; then
-#         executor_memory_overhead=1
-#     else
-#         executor_memory_overhead=2
-#     fi
+### Execution Loop
+for mem in "${memory_values[@]}"; do
+    if [ "$mem" -le 6 ]; then
+        executor_memory_overhead=1
+    else
+        executor_memory_overhead=2
+    fi
 
-#     for run in $(seq 1 $iterations); do
-#         run_experiment \
-#             "MemoryStudy" \
-#             "$memory_executors" \
-#             "$executor_cores" \
-#             "$mem" \
-#             "$memory_dataset" \
-#             "$run"
-#     done
-# done
+    for run in $(seq 1 $iterations); do
+        run_experiment \
+            "MemoryStudy" \
+            "$memory_executors" \
+            "$executor_cores" \
+            "$mem" \
+            "$memory_dataset" \
+            "$run"
+    done
+done
 
 # ==========================================================
 # FINAL CLEANUP

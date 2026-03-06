@@ -108,33 +108,24 @@ compute_ratio = compute_ms / (executor_run_time + 1e-9)
 # ==========================================================
 # Output
 # ==========================================================
-
-print("\n===== Spark Application Metrics =====")
-print(f"Total Application Time (ms): {total_time}")
-print(f"Executor Run Time (ms): {executor_run_time}")
-
-print("\n----- Parallelism -----")
-print(f"Parallelism Factor (ExecRun / AppTime): {parallelism_factor:.2f}")
-
-print("\n----- Garbage Collection -----")
-print(f"GC Time (ms): {gc_time_ms}")
-print(f"GC Ratio (GC / Executor Run Time): {gc_ratio:.4f}")
-
-print("\n----- Shuffle -----")
-print(f"Shuffle Read Time (ms): {shuffle_read_ms}")
-print(f"Shuffle Write Time (ms): {shuffle_write_ms}")
-print(f"Total Communication Time (ms): {communication_ms}")
-print(f"Communication Ratio (Comm / Executor Run Time): {communication_ratio:.4f}")
-
-print("\n----- Compute -----")
-print(f"Estimated Compute Time (ms): {compute_ms}")
-print(f"Compute Ratio (Compute / Executor Run Time): {compute_ratio:.4f}")
-
-print("\n----- Spill -----")
-print(f"Memory Spilled (MB): {memory_spill_mb:.2f}")
-print(f"Disk Spilled (MB): {disk_spill_mb:.2f}")
-
-print("\n----- Memory -----")
-print(f"Peak Executor Heap Memory (MB): {global_peak_heap_mb:.2f}")
-
-print("\n======================================\n")
+metrics = {
+    "total_time_ms": total_time,
+    "executor_run_time_ms": executor_run_time,
+    "parallelism_factor": parallelism_factor,
+    "gc_time_ms": gc_time_ms,
+    "gc_ratio": gc_ratio,
+    "shuffle_read_ms": shuffle_read_ms,
+    "shuffle_write_ms": shuffle_write_ms,
+    "communication_ms": communication_ms,
+    "communication_ratio": communication_ratio,
+    "compute_ms": compute_ms,
+    "compute_ratio": compute_ratio,
+    "memory_spill_mb": memory_spill_mb,
+    "disk_spill_mb": disk_spill_mb,
+    "peak_heap_mb": global_peak_heap_mb
+}
+print(",".join(str(metrics[k]) for k in [
+    "total_time_ms","executor_run_time_ms","parallelism_factor","gc_time_ms","gc_ratio",
+    "shuffle_read_ms","shuffle_write_ms","communication_ms","communication_ratio",
+    "compute_ms","compute_ratio","memory_spill_mb","disk_spill_mb","peak_heap_mb"
+]))
