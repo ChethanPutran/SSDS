@@ -187,8 +187,9 @@ data_sizes=(
 ### Configuration
 memory_executors=16
 memory_dataset="small_8"
-# memory_values=(4 6 8 10)
-memory_values=(8 10)
+executor_cores=2
+# memory_values=(2 4 6 8 10)
+memory_values=(2 8 10)
 
 
 ### Execution Loop
