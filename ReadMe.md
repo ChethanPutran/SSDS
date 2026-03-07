@@ -116,7 +116,7 @@ ssh chethan1@10.24.1.10
 Execute the scaling study script:
 
 ```bash
-./run_scaling_study.sh
+./scripts/run_metrics.sh
 ```
 
 The script automatically:
@@ -136,7 +136,7 @@ During execution, you can monitor progress through:
 
 For local browser access to Spark UI:
 ```bash
-ssh -L 4040:localhost:4040 -L 8088:localhost:8088 chethan1@10.24.1.10
+ssh -L 8088:<server_ip>:8088 -L 8088:localhost:8088 chethan1@10.24.1.10
 ```
 
 ### Output Files
@@ -152,7 +152,7 @@ Results are stored in the `outputs/` directory:
 The results file contains detailed metrics for each run:
 
 ```
-Type,Execs,Cores,TotalCores,MemGB,Data,AppID,S1,S2,S3,S4,S5a,S5b,S6a,S6b,TotalTime,AppTimeMs,ExecRunTimeMs,Parallelism,GCms,GCRatio,ShuffleReadMs,ShuffleWriteMs,CommMs,CommRatio,ComputeMs,ComputeRatio,MemSpillMB,DiskSpillMB,PeakHeapMB,Run
+Type,Execs,Cores,TotalCores,MemGB,Data,AppID,S1,S2,S3,S4,S5a,S5b,S6a,S6b,TotalTime,AppTimeMs,ExecRunTimeMs,Parallelism,GCMs,GCRatio,ShuffleReadMs,ShuffleWriteMs,CommMs,CommRatio,ComputeMs,ComputeRatio,MemSpillMB,DiskSpillMB,PeakHeapMB,Run
 ```
 
 ### Expected Patterns
