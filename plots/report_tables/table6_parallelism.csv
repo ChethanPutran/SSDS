@@ -1,0 +1,15 @@
+Scenario,TotalCores,Execs,Cores,Parallelism,Utilization%
+Strong Scaling,8,2,4,6.657140100218428,83.2
+Strong Scaling,16,4,4,9.731844398070859,60.8
+Strong Scaling,32,8,4,15.216742141829348,47.6
+Strong Scaling,64,16,4,28.413674334655052,44.4
+Strong Scaling,128,32,4,30.805313608881452,24.1
+Weak Scaling (2 cores/exec),2,1,2,1.8341826260679994,91.7
+Weak Scaling (2 cores/exec),4,2,2,3.609583959194857,90.2
+Weak Scaling (2 cores/exec),8,4,2,6.393549990617302,79.9
+Weak Scaling (2 cores/exec),12,6,2,9.721779085866414,81.0
+Weak Scaling (2 cores/exec),16,8,2,12.583232905019642,78.6
+Weak Scaling (2 cores/exec),32,16,2,24.85686122078556,77.7
+Weak Scaling (4 cores/exec),8,2,4,5.166553391083865,64.6
+Weak Scaling (4 cores/exec),16,4,4,10.026906880705988,62.7
+Weak Scaling (4 cores/exec),32,8,4,11.596292188371027,36.2

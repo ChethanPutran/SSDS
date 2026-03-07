@@ -1,0 +1,401 @@
+26/03/06 21:08:04 WARN NativeCodeLoader: Unable to load native-hadoop library for your platform... using builtin-java classes where applicable
+26/03/06 21:08:05 INFO SparkContext: Running Spark version 3.5.4
+26/03/06 21:08:05 INFO SparkContext: OS info Linux, 4.18.0-553.33.1.el8_10.x86_64, amd64
+26/03/06 21:08:05 INFO SparkContext: Java version 1.8.0_432
+26/03/06 21:08:05 INFO ResourceUtils: ==============================================================
+26/03/06 21:08:05 INFO ResourceUtils: No custom resources configured for spark.driver.
+26/03/06 21:08:05 INFO ResourceUtils: ==============================================================
+26/03/06 21:08:05 INFO SparkContext: Submitted application: LLM_Preprocessing_Pipeline
+26/03/06 21:08:05 INFO ResourceProfile: Default ResourceProfile created, executor resources: Map(memoryOverhead -> name: memoryOverhead, amount: 2048, script: , vendor: , cores -> name: cores, amount: 4, script: , vendor: , memory -> name: memory, amount: 4096, script: , vendor: , offHeap -> name: offHeap, amount: 0, script: , vendor: ), task resources: Map(cpus -> name: cpus, amount: 1.0)
+26/03/06 21:08:05 INFO ResourceProfile: Limiting resource is cpus at 4 tasks per executor
+26/03/06 21:08:05 INFO ResourceProfileManager: Added ResourceProfile id: 0
+26/03/06 21:08:05 INFO SecurityManager: Changing view acls to: chethan1
+26/03/06 21:08:05 INFO SecurityManager: Changing modify acls to: chethan1
+26/03/06 21:08:05 INFO SecurityManager: Changing view acls groups to: 
+26/03/06 21:08:05 INFO SecurityManager: Changing modify acls groups to: 
+26/03/06 21:08:05 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: chethan1; groups with view permissions: EMPTY; users with modify permissions: chethan1; groups with modify permissions: EMPTY
+26/03/06 21:08:05 INFO Utils: Successfully started service 'sparkDriver' on port 36025.
+26/03/06 21:08:05 INFO SparkEnv: Registering MapOutputTracker
+26/03/06 21:08:05 INFO SparkEnv: Registering BlockManagerMaster
+26/03/06 21:08:05 INFO BlockManagerMasterEndpoint: Using org.apache.spark.storage.DefaultTopologyMapper for getting topology information
+26/03/06 21:08:05 INFO BlockManagerMasterEndpoint: BlockManagerMasterEndpoint up
+26/03/06 21:08:05 INFO SparkEnv: Registering BlockManagerMasterHeartbeat
+26/03/06 21:08:05 INFO DiskBlockManager: Created local directory at /tmp/blockmgr-04743c23-4296-4478-8bfe-748cbdcfc3ba
+26/03/06 21:08:05 INFO MemoryStore: MemoryStore started with capacity 2004.6 MiB
+26/03/06 21:08:05 INFO SparkEnv: Registering OutputCommitCoordinator
+26/03/06 21:08:06 INFO JettyUtils: Start Jetty 0.0.0.0:4040 for SparkUI
+26/03/06 21:08:06 INFO Utils: Successfully started service 'SparkUI' on port 4040.
+26/03/06 21:08:06 INFO DefaultNoHARMFailoverProxyProvider: Connecting to ResourceManager at master.iisc.ac.in/192.168.1.1:8032
+26/03/06 21:08:06 INFO Configuration: resource-types.xml not found
+26/03/06 21:08:06 INFO ResourceUtils: Unable to find 'resource-types.xml'.
+26/03/06 21:08:06 INFO Client: Verifying our application has not requested more than the maximum memory capability of the cluster (12288 MB per container)
+26/03/06 21:08:06 INFO Client: Will allocate AM container, with 896 MB memory including 384 MB overhead
+26/03/06 21:08:06 INFO Client: Setting up container launch context for our AM
+26/03/06 21:08:06 INFO Client: Setting up the launch environment for our AM container
+26/03/06 21:08:06 INFO Client: Preparing resources for our AM container
+26/03/06 21:08:06 WARN Client: Neither spark.yarn.jars nor spark.yarn.archive is set, falling back to uploading libraries under SPARK_HOME.
+26/03/06 21:08:07 INFO Client: Uploading resource file:/tmp/spark-89e1c013-3fc1-46c5-87f3-52e6a202e4e3/__spark_libs__2287111019848807120.zip -> hdfs://master.iisc.ac.in:9000/user/chethan1/.sparkStaging/application_1772492797887_0527/__spark_libs__2287111019848807120.zip
+26/03/06 21:08:10 INFO Client: Source and destination file systems are the same. Not copying hdfs://master.iisc.ac.in:9000/ds256_2026/lid.176.bin
+26/03/06 21:08:10 INFO Client: Uploading resource file:/opt/spark/python/lib/pyspark.zip -> hdfs://master.iisc.ac.in:9000/user/chethan1/.sparkStaging/application_1772492797887_0527/pyspark.zip
+26/03/06 21:08:11 INFO Client: Uploading resource file:/opt/spark/python/lib/py4j-0.10.9.7-src.zip -> hdfs://master.iisc.ac.in:9000/user/chethan1/.sparkStaging/application_1772492797887_0527/py4j-0.10.9.7-src.zip
+26/03/06 21:08:11 INFO Client: Uploading resource file:/tmp/spark-89e1c013-3fc1-46c5-87f3-52e6a202e4e3/__spark_conf__3068787428211082380.zip -> hdfs://master.iisc.ac.in:9000/user/chethan1/.sparkStaging/application_1772492797887_0527/__spark_conf__.zip
+26/03/06 21:08:11 INFO SecurityManager: Changing view acls to: chethan1
+26/03/06 21:08:11 INFO SecurityManager: Changing modify acls to: chethan1
+26/03/06 21:08:11 INFO SecurityManager: Changing view acls groups to: 
+26/03/06 21:08:11 INFO SecurityManager: Changing modify acls groups to: 
+26/03/06 21:08:11 INFO SecurityManager: SecurityManager: authentication disabled; ui acls disabled; users with view permissions: chethan1; groups with view permissions: EMPTY; users with modify permissions: chethan1; groups with modify permissions: EMPTY
+26/03/06 21:08:11 INFO Client: Submitting application application_1772492797887_0527 to ResourceManager
+26/03/06 21:08:11 INFO YarnClientImpl: Submitted application application_1772492797887_0527
+26/03/06 21:08:12 INFO Client: Application report for application_1772492797887_0527 (state: ACCEPTED)
+26/03/06 21:08:12 INFO Client: 
+	 client token: N/A
+	 diagnostics: AM container is launched, waiting for AM container to Register with RM
+	 ApplicationMaster host: N/A
+	 ApplicationMaster RPC port: -1
+	 queue: root.ds256.team8
+	 start time: 1772811491693
+	 final status: UNDEFINED
+	 tracking URL: http://master.iisc.ac.in:8088/proxy/application_1772492797887_0527/
+	 user: chethan1
+26/03/06 21:08:17 INFO YarnClientSchedulerBackend: Add WebUI Filter. org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter, Map(PROXY_HOSTS -> master.iisc.ac.in, PROXY_URI_BASES -> http://master.iisc.ac.in:8088/proxy/application_1772492797887_0527), /proxy/application_1772492797887_0527
+26/03/06 21:08:17 INFO YarnSchedulerBackend$YarnSchedulerEndpoint: ApplicationMaster registered as NettyRpcEndpointRef(spark-client://YarnAM)
+26/03/06 21:08:17 INFO Client: Application report for application_1772492797887_0527 (state: RUNNING)
+26/03/06 21:08:17 INFO Client: 
+	 client token: N/A
+	 diagnostics: N/A
+	 ApplicationMaster host: 192.168.1.7
+	 ApplicationMaster RPC port: -1
+	 queue: root.ds256.team8
+	 start time: 1772811491693
+	 final status: UNDEFINED
+	 tracking URL: http://master.iisc.ac.in:8088/proxy/application_1772492797887_0527/
+	 user: chethan1
+26/03/06 21:08:17 INFO YarnClientSchedulerBackend: Application application_1772492797887_0527 has started running.
+26/03/06 21:08:17 INFO Utils: Successfully started service 'org.apache.spark.network.netty.NettyBlockTransferService' on port 34177.
+26/03/06 21:08:17 INFO NettyBlockTransferService: Server created on master.iisc.ac.in:34177
+26/03/06 21:08:17 INFO BlockManager: Using org.apache.spark.storage.RandomBlockReplicationPolicy for block replication policy
+26/03/06 21:08:17 INFO BlockManagerMaster: Registering BlockManager BlockManagerId(driver, master.iisc.ac.in, 34177, None)
+26/03/06 21:08:17 INFO BlockManagerMasterEndpoint: Registering block manager master.iisc.ac.in:34177 with 2004.6 MiB RAM, BlockManagerId(driver, master.iisc.ac.in, 34177, None)
+26/03/06 21:08:17 INFO BlockManagerMaster: Registered BlockManager BlockManagerId(driver, master.iisc.ac.in, 34177, None)
+26/03/06 21:08:17 INFO BlockManager: Initialized BlockManager: BlockManagerId(driver, master.iisc.ac.in, 34177, None)
+26/03/06 21:08:17 INFO SingleEventLogFileWriter: Logging events to hdfs:/user/chethan1/spark-logs/application_1772492797887_0527.inprogress
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /jobs: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /jobs/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /jobs/job: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /jobs/job/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /stages: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /stages/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /stages/stage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /stages/stage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /stages/pool: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /stages/pool/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /storage: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /storage/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /storage/rdd: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /storage/rdd/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /environment: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /environment/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /executors: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /executors/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /executors/threadDump: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /executors/threadDump/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /static: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /api: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /jobs/job/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /stages/stage/kill: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:18 INFO ServerInfo: Adding filter to /metrics/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:20 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.7:58046) with ID 2,  ResourceProfileId 0
+26/03/06 21:08:20 INFO BlockManagerMasterEndpoint: Registering block manager node6.iisc.ac.in:38769 with 2004.6 MiB RAM, BlockManagerId(2, node6.iisc.ac.in, 38769, None)
+26/03/06 21:08:21 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.6:41702) with ID 3,  ResourceProfileId 0
+26/03/06 21:08:21 INFO BlockManagerMasterEndpoint: Registering block manager node5.iisc.ac.in:34209 with 2004.6 MiB RAM, BlockManagerId(3, node5.iisc.ac.in, 34209, None)
+26/03/06 21:08:22 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.6:41722) with ID 9,  ResourceProfileId 0
+26/03/06 21:08:22 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.6:41734) with ID 15,  ResourceProfileId 0
+26/03/06 21:08:22 INFO BlockManagerMasterEndpoint: Registering block manager node5.iisc.ac.in:35627 with 2004.6 MiB RAM, BlockManagerId(9, node5.iisc.ac.in, 35627, None)
+26/03/06 21:08:22 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.7:36000) with ID 8,  ResourceProfileId 0
+26/03/06 21:08:22 INFO BlockManagerMasterEndpoint: Registering block manager node5.iisc.ac.in:42703 with 2004.6 MiB RAM, BlockManagerId(15, node5.iisc.ac.in, 42703, None)
+26/03/06 21:08:22 INFO BlockManagerMasterEndpoint: Registering block manager node6.iisc.ac.in:36713 with 2004.6 MiB RAM, BlockManagerId(8, node6.iisc.ac.in, 36713, None)
+26/03/06 21:08:22 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.7:36016) with ID 14,  ResourceProfileId 0
+26/03/06 21:08:22 INFO BlockManagerMasterEndpoint: Registering block manager node6.iisc.ac.in:33949 with 2004.6 MiB RAM, BlockManagerId(14, node6.iisc.ac.in, 33949, None)
+26/03/06 21:08:23 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.3:51288) with ID 17,  ResourceProfileId 0
+26/03/06 21:08:23 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.3:51282) with ID 5,  ResourceProfileId 0
+26/03/06 21:08:23 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.3:51296) with ID 11,  ResourceProfileId 0
+26/03/06 21:08:23 INFO BlockManagerMasterEndpoint: Registering block manager node2.iisc.ac.in:36319 with 2004.6 MiB RAM, BlockManagerId(17, node2.iisc.ac.in, 36319, None)
+26/03/06 21:08:23 INFO BlockManagerMasterEndpoint: Registering block manager node2.iisc.ac.in:33183 with 2004.6 MiB RAM, BlockManagerId(5, node2.iisc.ac.in, 33183, None)
+26/03/06 21:08:23 INFO BlockManagerMasterEndpoint: Registering block manager node2.iisc.ac.in:41671 with 2004.6 MiB RAM, BlockManagerId(11, node2.iisc.ac.in, 41671, None)
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.5:41806) with ID 12,  ResourceProfileId 0
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.5:41812) with ID 6,  ResourceProfileId 0
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.6:40922) with ID 21,  ResourceProfileId 0
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.3:51322) with ID 23,  ResourceProfileId 0
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node4.iisc.ac.in:36331 with 2004.6 MiB RAM, BlockManagerId(12, node4.iisc.ac.in, 36331, None)
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node4.iisc.ac.in:45427 with 2004.6 MiB RAM, BlockManagerId(6, node4.iisc.ac.in, 45427, None)
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node5.iisc.ac.in:42039 with 2004.6 MiB RAM, BlockManagerId(21, node5.iisc.ac.in, 42039, None)
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.5:41816) with ID 18,  ResourceProfileId 0
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node2.iisc.ac.in:39059 with 2004.6 MiB RAM, BlockManagerId(23, node2.iisc.ac.in, 39059, None)
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node4.iisc.ac.in:45153 with 2004.6 MiB RAM, BlockManagerId(18, node4.iisc.ac.in, 45153, None)
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.2:38266) with ID 10,  ResourceProfileId 0
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.2:38244) with ID 16,  ResourceProfileId 0
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.2:38252) with ID 4,  ResourceProfileId 0
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node1.iisc.ac.in:44709 with 2004.6 MiB RAM, BlockManagerId(16, node1.iisc.ac.in, 44709, None)
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node1.iisc.ac.in:33377 with 2004.6 MiB RAM, BlockManagerId(10, node1.iisc.ac.in, 33377, None)
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.5:41840) with ID 24,  ResourceProfileId 0
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node1.iisc.ac.in:43531 with 2004.6 MiB RAM, BlockManagerId(4, node1.iisc.ac.in, 43531, None)
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node4.iisc.ac.in:39405 with 2004.6 MiB RAM, BlockManagerId(24, node4.iisc.ac.in, 39405, None)
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.7:36052) with ID 26,  ResourceProfileId 0
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.7:36068) with ID 20,  ResourceProfileId 0
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.2:38286) with ID 22,  ResourceProfileId 0
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.4:41804) with ID 1,  ResourceProfileId 0
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node6.iisc.ac.in:37631 with 2004.6 MiB RAM, BlockManagerId(26, node6.iisc.ac.in, 37631, None)
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.4:41816) with ID 7,  ResourceProfileId 0
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node6.iisc.ac.in:45443 with 2004.6 MiB RAM, BlockManagerId(20, node6.iisc.ac.in, 45443, None)
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node1.iisc.ac.in:43157 with 2004.6 MiB RAM, BlockManagerId(22, node1.iisc.ac.in, 43157, None)
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.4:41822) with ID 25,  ResourceProfileId 0
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node3.iisc.ac.in:32843 with 2004.6 MiB RAM, BlockManagerId(1, node3.iisc.ac.in, 32843, None)
+26/03/06 21:08:25 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.4:41834) with ID 19,  ResourceProfileId 0
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node3.iisc.ac.in:33797 with 2004.6 MiB RAM, BlockManagerId(7, node3.iisc.ac.in, 33797, None)
+26/03/06 21:08:25 INFO BlockManagerMasterEndpoint: Registering block manager node3.iisc.ac.in:40605 with 2004.6 MiB RAM, BlockManagerId(25, node3.iisc.ac.in, 40605, None)
+26/03/06 21:08:26 INFO BlockManagerMasterEndpoint: Registering block manager node3.iisc.ac.in:42741 with 2004.6 MiB RAM, BlockManagerId(19, node3.iisc.ac.in, 42741, None)
+26/03/06 21:08:26 INFO YarnSchedulerBackend$YarnDriverEndpoint: Registered executor NettyRpcEndpointRef(spark-client://Executor) (192.168.1.4:41850) with ID 13,  ResourceProfileId 0
+26/03/06 21:08:26 INFO YarnClientSchedulerBackend: SchedulerBackend is ready for scheduling beginning after reached minRegisteredResourcesRatio: 0.8
+26/03/06 21:08:26 INFO BlockManagerMasterEndpoint: Registering block manager node3.iisc.ac.in:41739 with 2004.6 MiB RAM, BlockManagerId(13, node3.iisc.ac.in, 41739, None)
+[('spark.pyspark.driver.python', '/opt/ds256_env/bin/python'), ('spark.eventLog.enabled', 'true'), ('spark.driver.host', 'master.iisc.ac.in'), ('spark.eventLog.logStageExecutorMetrics', 'true'), ('spark.executor.instances', '32'), ('spark.driver.port', '36025'), ('spark.driver.memory', '4g'), ('spark.executor.processTreeMetrics.enabled', 'true'), ('spark.executor.cores', '4'), ('spark.org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter.param.PROXY_HOSTS', 'master.iisc.ac.in'), ('spark.serializer.objectStreamReset', '100'), ('spark.history.fs.logDirectory', 'hdfs:///spark-logs'), ('spark.submit.deployMode', 'client'), ('spark.executorEnv.PYTHONPATH', '{{PWD}}/pyspark.zip<CPS>{{PWD}}/py4j-0.10.9.7-src.zip'), ('spark.ui.filters', 'org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter'), ('spark.executor.metrics.pollingInterval', '5s'), ('spark.driver.appUIAddress', 'http://master.iisc.ac.in:4040'), ('spark.driver.extraJavaOptions', '-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false'), ('spark.yarn.queue', 'root.ds256.team8'), ('spark.executor.memory', '4g'), ('spark.pyspark.python', '/opt/ds256_env/bin/python'), ('spark.executor.id', 'driver'), ('spark.eventLog.dir', 'hdfs:///user/chethan1/spark-logs'), ('spark.org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter.param.PROXY_URI_BASES', 'http://master.iisc.ac.in:8088/proxy/application_1772492797887_0527'), ('spark.eventLog.logBlockUpdates.enabled', 'true'), ('spark.executor.memoryOverhead', '2g'), ('spark.app.name', 'LLM_Preprocessing_Pipeline'), ('spark.master', 'yarn'), ('spark.app.startTime', '1772811485486'), ('spark.rdd.compress', 'True'), ('spark.executor.extraJavaOptions', '-Djava.net.preferIPv6Addresses=false -XX:+IgnoreUnrecognizedVMOptions --add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.lang.invoke=ALL-UNNAMED --add-opens=java.base/java.lang.reflect=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED --add-opens=java.base/java.net=ALL-UNNAMED --add-opens=java.base/java.nio=ALL-UNNAMED --add-opens=java.base/java.util=ALL-UNNAMED --add-opens=java.base/java.util.concurrent=ALL-UNNAMED --add-opens=java.base/java.util.concurrent.atomic=ALL-UNNAMED --add-opens=java.base/jdk.internal.ref=ALL-UNNAMED --add-opens=java.base/sun.nio.ch=ALL-UNNAMED --add-opens=java.base/sun.nio.cs=ALL-UNNAMED --add-opens=java.base/sun.security.action=ALL-UNNAMED --add-opens=java.base/sun.util.calendar=ALL-UNNAMED --add-opens=java.security.jgss/sun.security.krb5=ALL-UNNAMED -Djdk.reflect.useDirectMethodHandle=false'), ('spark.yarn.dist.files', 'hdfs://master.iisc.ac.in:9000/ds256_2026/lid.176.bin'), ('spark.submit.pyFiles', ''), ('spark.yarn.isPython', 'true'), ('spark.ui.proxyBase', '/proxy/application_1772492797887_0527'), ('spark.app.id', 'application_1772492797887_0527'), ('spark.app.submitTime', '1772811484633')]
+>>> Starting Pipeline Execution...
+26/03/06 21:08:28 INFO SharedState: Setting hive.metastore.warehouse.dir ('null') to the value of spark.sql.warehouse.dir.
+26/03/06 21:08:28 INFO SharedState: Warehouse path is 'file:/scratch/chethan1/SSDS/scalability_study/spark-warehouse'.
+26/03/06 21:08:28 INFO ServerInfo: Adding filter to /SQL: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:28 INFO ServerInfo: Adding filter to /SQL/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:28 INFO ServerInfo: Adding filter to /SQL/execution: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:28 INFO ServerInfo: Adding filter to /SQL/execution/json: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:28 INFO ServerInfo: Adding filter to /static/sql: org.apache.hadoop.yarn.server.webproxy.amfilter.AmIpFilter
+26/03/06 21:08:30 INFO CodeGenerator: Code generated in 188.758464 ms
+26/03/06 21:08:30 INFO DAGScheduler: Registering RDD 7 (parquet at NativeMethodAccessorImpl.java:0) as input to shuffle 0
+26/03/06 21:08:30 INFO DAGScheduler: Got map stage job 0 (parquet at NativeMethodAccessorImpl.java:0) with 104 output partitions
+26/03/06 21:08:30 INFO DAGScheduler: Final stage: ShuffleMapStage 0 (parquet at NativeMethodAccessorImpl.java:0)
+26/03/06 21:08:30 INFO DAGScheduler: Parents of final stage: List()
+26/03/06 21:08:30 INFO DAGScheduler: Missing parents: List()
+26/03/06 21:08:30 INFO DAGScheduler: Submitting ShuffleMapStage 0 (MapPartitionsRDD[7] at parquet at NativeMethodAccessorImpl.java:0), which has no missing parents
+26/03/06 21:08:30 INFO MemoryStore: Block broadcast_0 stored as values in memory (estimated size 23.2 KiB, free 2004.6 MiB)
+26/03/06 21:08:30 INFO MemoryStore: Block broadcast_0_piece0 stored as bytes in memory (estimated size 12.0 KiB, free 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on master.iisc.ac.in:34177 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO SparkContext: Created broadcast 0 from broadcast at DAGScheduler.scala:1585
+26/03/06 21:08:30 INFO DAGScheduler: Submitting 104 missing tasks from ShuffleMapStage 0 (MapPartitionsRDD[7] at parquet at NativeMethodAccessorImpl.java:0) (first 15 tasks are for partitions Vector(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14))
+26/03/06 21:08:30 INFO YarnScheduler: Adding task set 0.0 with 104 tasks resource profile 0
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 0.0 in stage 0.0 (TID 0) (node5.iisc.ac.in, executor 9, partition 0, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 1.0 in stage 0.0 (TID 1) (node4.iisc.ac.in, executor 18, partition 1, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 2.0 in stage 0.0 (TID 2) (node6.iisc.ac.in, executor 2, partition 2, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 3.0 in stage 0.0 (TID 3) (node5.iisc.ac.in, executor 3, partition 3, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 4.0 in stage 0.0 (TID 4) (node4.iisc.ac.in, executor 12, partition 4, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 5.0 in stage 0.0 (TID 5) (node1.iisc.ac.in, executor 16, partition 5, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 6.0 in stage 0.0 (TID 6) (node4.iisc.ac.in, executor 6, partition 6, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 7.0 in stage 0.0 (TID 7) (node2.iisc.ac.in, executor 5, partition 7, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 8.0 in stage 0.0 (TID 8) (node3.iisc.ac.in, executor 13, partition 8, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 9.0 in stage 0.0 (TID 9) (node5.iisc.ac.in, executor 21, partition 9, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 10.0 in stage 0.0 (TID 10) (node1.iisc.ac.in, executor 10, partition 10, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 11.0 in stage 0.0 (TID 11) (node6.iisc.ac.in, executor 26, partition 11, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 12.0 in stage 0.0 (TID 12) (node2.iisc.ac.in, executor 11, partition 12, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 13.0 in stage 0.0 (TID 13) (node3.iisc.ac.in, executor 19, partition 13, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 14.0 in stage 0.0 (TID 14) (node2.iisc.ac.in, executor 23, partition 14, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 15.0 in stage 0.0 (TID 15) (node2.iisc.ac.in, executor 17, partition 15, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 16.0 in stage 0.0 (TID 16) (node3.iisc.ac.in, executor 1, partition 16, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 17.0 in stage 0.0 (TID 17) (node5.iisc.ac.in, executor 15, partition 17, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 18.0 in stage 0.0 (TID 18) (node1.iisc.ac.in, executor 4, partition 18, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 19.0 in stage 0.0 (TID 19) (node3.iisc.ac.in, executor 25, partition 19, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 20.0 in stage 0.0 (TID 20) (node6.iisc.ac.in, executor 20, partition 20, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 21.0 in stage 0.0 (TID 21) (node6.iisc.ac.in, executor 8, partition 21, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 22.0 in stage 0.0 (TID 22) (node3.iisc.ac.in, executor 7, partition 22, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 23.0 in stage 0.0 (TID 23) (node6.iisc.ac.in, executor 14, partition 23, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 24.0 in stage 0.0 (TID 24) (node1.iisc.ac.in, executor 22, partition 24, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 25.0 in stage 0.0 (TID 25) (node4.iisc.ac.in, executor 24, partition 25, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 26.0 in stage 0.0 (TID 26) (node5.iisc.ac.in, executor 9, partition 26, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 27.0 in stage 0.0 (TID 27) (node4.iisc.ac.in, executor 18, partition 27, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 28.0 in stage 0.0 (TID 28) (node6.iisc.ac.in, executor 2, partition 28, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 29.0 in stage 0.0 (TID 29) (node5.iisc.ac.in, executor 3, partition 29, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 30.0 in stage 0.0 (TID 30) (node4.iisc.ac.in, executor 12, partition 30, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 31.0 in stage 0.0 (TID 31) (node1.iisc.ac.in, executor 16, partition 31, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 32.0 in stage 0.0 (TID 32) (node4.iisc.ac.in, executor 6, partition 32, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 33.0 in stage 0.0 (TID 33) (node2.iisc.ac.in, executor 5, partition 33, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 34.0 in stage 0.0 (TID 34) (node3.iisc.ac.in, executor 13, partition 34, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 35.0 in stage 0.0 (TID 35) (node5.iisc.ac.in, executor 21, partition 35, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 36.0 in stage 0.0 (TID 36) (node1.iisc.ac.in, executor 10, partition 36, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 37.0 in stage 0.0 (TID 37) (node6.iisc.ac.in, executor 26, partition 37, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 38.0 in stage 0.0 (TID 38) (node2.iisc.ac.in, executor 11, partition 38, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 39.0 in stage 0.0 (TID 39) (node3.iisc.ac.in, executor 19, partition 39, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 40.0 in stage 0.0 (TID 40) (node2.iisc.ac.in, executor 23, partition 40, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 41.0 in stage 0.0 (TID 41) (node2.iisc.ac.in, executor 17, partition 41, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 42.0 in stage 0.0 (TID 42) (node3.iisc.ac.in, executor 1, partition 42, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 43.0 in stage 0.0 (TID 43) (node5.iisc.ac.in, executor 15, partition 43, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 44.0 in stage 0.0 (TID 44) (node1.iisc.ac.in, executor 4, partition 44, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 45.0 in stage 0.0 (TID 45) (node3.iisc.ac.in, executor 25, partition 45, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 46.0 in stage 0.0 (TID 46) (node6.iisc.ac.in, executor 20, partition 46, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 47.0 in stage 0.0 (TID 47) (node6.iisc.ac.in, executor 8, partition 47, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 48.0 in stage 0.0 (TID 48) (node3.iisc.ac.in, executor 7, partition 48, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 49.0 in stage 0.0 (TID 49) (node6.iisc.ac.in, executor 14, partition 49, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 50.0 in stage 0.0 (TID 50) (node1.iisc.ac.in, executor 22, partition 50, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 51.0 in stage 0.0 (TID 51) (node4.iisc.ac.in, executor 24, partition 51, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 52.0 in stage 0.0 (TID 52) (node5.iisc.ac.in, executor 9, partition 52, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 53.0 in stage 0.0 (TID 53) (node4.iisc.ac.in, executor 18, partition 53, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 54.0 in stage 0.0 (TID 54) (node6.iisc.ac.in, executor 2, partition 54, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 55.0 in stage 0.0 (TID 55) (node5.iisc.ac.in, executor 3, partition 55, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 56.0 in stage 0.0 (TID 56) (node4.iisc.ac.in, executor 12, partition 56, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 57.0 in stage 0.0 (TID 57) (node1.iisc.ac.in, executor 16, partition 57, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 58.0 in stage 0.0 (TID 58) (node4.iisc.ac.in, executor 6, partition 58, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 59.0 in stage 0.0 (TID 59) (node2.iisc.ac.in, executor 5, partition 59, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 60.0 in stage 0.0 (TID 60) (node3.iisc.ac.in, executor 13, partition 60, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 61.0 in stage 0.0 (TID 61) (node5.iisc.ac.in, executor 21, partition 61, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 62.0 in stage 0.0 (TID 62) (node1.iisc.ac.in, executor 10, partition 62, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 63.0 in stage 0.0 (TID 63) (node6.iisc.ac.in, executor 26, partition 63, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 64.0 in stage 0.0 (TID 64) (node2.iisc.ac.in, executor 11, partition 64, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 65.0 in stage 0.0 (TID 65) (node3.iisc.ac.in, executor 19, partition 65, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 66.0 in stage 0.0 (TID 66) (node2.iisc.ac.in, executor 23, partition 66, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 67.0 in stage 0.0 (TID 67) (node2.iisc.ac.in, executor 17, partition 67, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 68.0 in stage 0.0 (TID 68) (node3.iisc.ac.in, executor 1, partition 68, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 69.0 in stage 0.0 (TID 69) (node5.iisc.ac.in, executor 15, partition 69, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 70.0 in stage 0.0 (TID 70) (node1.iisc.ac.in, executor 4, partition 70, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 71.0 in stage 0.0 (TID 71) (node3.iisc.ac.in, executor 25, partition 71, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 72.0 in stage 0.0 (TID 72) (node6.iisc.ac.in, executor 20, partition 72, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 73.0 in stage 0.0 (TID 73) (node6.iisc.ac.in, executor 8, partition 73, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 74.0 in stage 0.0 (TID 74) (node3.iisc.ac.in, executor 7, partition 74, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 75.0 in stage 0.0 (TID 75) (node6.iisc.ac.in, executor 14, partition 75, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 76.0 in stage 0.0 (TID 76) (node1.iisc.ac.in, executor 22, partition 76, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 77.0 in stage 0.0 (TID 77) (node4.iisc.ac.in, executor 24, partition 77, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 78.0 in stage 0.0 (TID 78) (node5.iisc.ac.in, executor 9, partition 78, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 79.0 in stage 0.0 (TID 79) (node4.iisc.ac.in, executor 18, partition 79, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 80.0 in stage 0.0 (TID 80) (node6.iisc.ac.in, executor 2, partition 80, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 81.0 in stage 0.0 (TID 81) (node5.iisc.ac.in, executor 3, partition 81, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 82.0 in stage 0.0 (TID 82) (node4.iisc.ac.in, executor 12, partition 82, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 83.0 in stage 0.0 (TID 83) (node1.iisc.ac.in, executor 16, partition 83, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 84.0 in stage 0.0 (TID 84) (node4.iisc.ac.in, executor 6, partition 84, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 85.0 in stage 0.0 (TID 85) (node2.iisc.ac.in, executor 5, partition 85, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 86.0 in stage 0.0 (TID 86) (node3.iisc.ac.in, executor 13, partition 86, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 87.0 in stage 0.0 (TID 87) (node5.iisc.ac.in, executor 21, partition 87, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 88.0 in stage 0.0 (TID 88) (node1.iisc.ac.in, executor 10, partition 88, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 89.0 in stage 0.0 (TID 89) (node6.iisc.ac.in, executor 26, partition 89, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 90.0 in stage 0.0 (TID 90) (node2.iisc.ac.in, executor 11, partition 90, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 91.0 in stage 0.0 (TID 91) (node3.iisc.ac.in, executor 19, partition 91, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 92.0 in stage 0.0 (TID 92) (node2.iisc.ac.in, executor 23, partition 92, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 93.0 in stage 0.0 (TID 93) (node2.iisc.ac.in, executor 17, partition 93, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 94.0 in stage 0.0 (TID 94) (node3.iisc.ac.in, executor 1, partition 94, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 95.0 in stage 0.0 (TID 95) (node5.iisc.ac.in, executor 15, partition 95, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 96.0 in stage 0.0 (TID 96) (node1.iisc.ac.in, executor 4, partition 96, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 97.0 in stage 0.0 (TID 97) (node3.iisc.ac.in, executor 25, partition 97, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 98.0 in stage 0.0 (TID 98) (node6.iisc.ac.in, executor 20, partition 98, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 99.0 in stage 0.0 (TID 99) (node6.iisc.ac.in, executor 8, partition 99, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 100.0 in stage 0.0 (TID 100) (node3.iisc.ac.in, executor 7, partition 100, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 101.0 in stage 0.0 (TID 101) (node6.iisc.ac.in, executor 14, partition 101, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 102.0 in stage 0.0 (TID 102) (node1.iisc.ac.in, executor 22, partition 102, PROCESS_LOCAL, 8979 bytes) 
+26/03/06 21:08:30 INFO TaskSetManager: Starting task 103.0 in stage 0.0 (TID 103) (node4.iisc.ac.in, executor 24, partition 103, PROCESS_LOCAL, 9083 bytes) 
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node5.iisc.ac.in:35627 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node5.iisc.ac.in:34209 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node5.iisc.ac.in:42039 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node2.iisc.ac.in:33183 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node4.iisc.ac.in:45153 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node4.iisc.ac.in:45427 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node4.iisc.ac.in:39405 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node4.iisc.ac.in:36331 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node1.iisc.ac.in:44709 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node5.iisc.ac.in:42703 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node2.iisc.ac.in:41671 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node2.iisc.ac.in:36319 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node2.iisc.ac.in:39059 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node3.iisc.ac.in:42741 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node3.iisc.ac.in:41739 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node1.iisc.ac.in:43531 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node1.iisc.ac.in:33377 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node1.iisc.ac.in:43157 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node3.iisc.ac.in:32843 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node3.iisc.ac.in:33797 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node3.iisc.ac.in:40605 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:30 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node6.iisc.ac.in:37631 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:31 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node6.iisc.ac.in:33949 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:31 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node6.iisc.ac.in:38769 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:31 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node6.iisc.ac.in:36713 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:31 INFO BlockManagerInfo: Added broadcast_0_piece0 in memory on node6.iisc.ac.in:45443 (size: 12.0 KiB, free: 2004.6 MiB)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 95.0 in stage 0.0 (TID 95) in 1769 ms on node5.iisc.ac.in (executor 15) (1/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 43.0 in stage 0.0 (TID 43) in 1781 ms on node5.iisc.ac.in (executor 15) (2/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 69.0 in stage 0.0 (TID 69) in 1776 ms on node5.iisc.ac.in (executor 15) (3/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 17.0 in stage 0.0 (TID 17) in 1788 ms on node5.iisc.ac.in (executor 15) (4/104)
+26/03/06 21:08:32 INFO PythonAccumulatorV2: Connected to AccumulatorServer at host: 127.0.0.1 port: 52009
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 1.0 in stage 0.0 (TID 1) in 1819 ms on node4.iisc.ac.in (executor 18) (5/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 27.0 in stage 0.0 (TID 27) in 1811 ms on node4.iisc.ac.in (executor 18) (6/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 53.0 in stage 0.0 (TID 53) in 1806 ms on node4.iisc.ac.in (executor 18) (7/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 79.0 in stage 0.0 (TID 79) in 1801 ms on node4.iisc.ac.in (executor 18) (8/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 36.0 in stage 0.0 (TID 36) in 1812 ms on node1.iisc.ac.in (executor 10) (9/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 62.0 in stage 0.0 (TID 62) in 1806 ms on node1.iisc.ac.in (executor 10) (10/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 88.0 in stage 0.0 (TID 88) in 1802 ms on node1.iisc.ac.in (executor 10) (11/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 10.0 in stage 0.0 (TID 10) in 1821 ms on node1.iisc.ac.in (executor 10) (12/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 61.0 in stage 0.0 (TID 61) in 1825 ms on node5.iisc.ac.in (executor 21) (13/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 87.0 in stage 0.0 (TID 87) in 1821 ms on node5.iisc.ac.in (executor 21) (14/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 9.0 in stage 0.0 (TID 9) in 1840 ms on node5.iisc.ac.in (executor 21) (15/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 35.0 in stage 0.0 (TID 35) in 1834 ms on node5.iisc.ac.in (executor 21) (16/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 44.0 in stage 0.0 (TID 44) in 1839 ms on node1.iisc.ac.in (executor 4) (17/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 18.0 in stage 0.0 (TID 18) in 1845 ms on node1.iisc.ac.in (executor 4) (18/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 70.0 in stage 0.0 (TID 70) in 1834 ms on node1.iisc.ac.in (executor 4) (19/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 96.0 in stage 0.0 (TID 96) in 1830 ms on node1.iisc.ac.in (executor 4) (20/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 57.0 in stage 0.0 (TID 57) in 1839 ms on node1.iisc.ac.in (executor 16) (21/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 31.0 in stage 0.0 (TID 31) in 1845 ms on node1.iisc.ac.in (executor 16) (22/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 83.0 in stage 0.0 (TID 83) in 1835 ms on node1.iisc.ac.in (executor 16) (23/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 5.0 in stage 0.0 (TID 5) in 1855 ms on node1.iisc.ac.in (executor 16) (24/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 29.0 in stage 0.0 (TID 29) in 1850 ms on node5.iisc.ac.in (executor 3) (25/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 81.0 in stage 0.0 (TID 81) in 1841 ms on node5.iisc.ac.in (executor 3) (26/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 3.0 in stage 0.0 (TID 3) in 1860 ms on node5.iisc.ac.in (executor 3) (27/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 55.0 in stage 0.0 (TID 55) in 1846 ms on node5.iisc.ac.in (executor 3) (28/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 26.0 in stage 0.0 (TID 26) in 1873 ms on node5.iisc.ac.in (executor 9) (29/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 52.0 in stage 0.0 (TID 52) in 1868 ms on node5.iisc.ac.in (executor 9) (30/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 0.0 in stage 0.0 (TID 0) in 1895 ms on node5.iisc.ac.in (executor 9) (31/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 78.0 in stage 0.0 (TID 78) in 1864 ms on node5.iisc.ac.in (executor 9) (32/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 50.0 in stage 0.0 (TID 50) in 1871 ms on node1.iisc.ac.in (executor 22) (33/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 102.0 in stage 0.0 (TID 102) in 1862 ms on node1.iisc.ac.in (executor 22) (34/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 24.0 in stage 0.0 (TID 24) in 1878 ms on node1.iisc.ac.in (executor 22) (35/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 76.0 in stage 0.0 (TID 76) in 1867 ms on node1.iisc.ac.in (executor 22) (36/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 15.0 in stage 0.0 (TID 15) in 1893 ms on node2.iisc.ac.in (executor 17) (37/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 67.0 in stage 0.0 (TID 67) in 1880 ms on node2.iisc.ac.in (executor 17) (38/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 93.0 in stage 0.0 (TID 93) in 1876 ms on node2.iisc.ac.in (executor 17) (39/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 41.0 in stage 0.0 (TID 41) in 1887 ms on node2.iisc.ac.in (executor 17) (40/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 66.0 in stage 0.0 (TID 66) in 1890 ms on node2.iisc.ac.in (executor 23) (41/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 40.0 in stage 0.0 (TID 40) in 1896 ms on node2.iisc.ac.in (executor 23) (42/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 92.0 in stage 0.0 (TID 92) in 1886 ms on node2.iisc.ac.in (executor 23) (43/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 14.0 in stage 0.0 (TID 14) in 1903 ms on node2.iisc.ac.in (executor 23) (44/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 82.0 in stage 0.0 (TID 82) in 1894 ms on node4.iisc.ac.in (executor 12) (45/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 4.0 in stage 0.0 (TID 4) in 1914 ms on node4.iisc.ac.in (executor 12) (46/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 56.0 in stage 0.0 (TID 56) in 1900 ms on node4.iisc.ac.in (executor 12) (47/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 30.0 in stage 0.0 (TID 30) in 1905 ms on node4.iisc.ac.in (executor 12) (48/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 7.0 in stage 0.0 (TID 7) in 1942 ms on node2.iisc.ac.in (executor 5) (49/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 85.0 in stage 0.0 (TID 85) in 1923 ms on node2.iisc.ac.in (executor 5) (50/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 33.0 in stage 0.0 (TID 33) in 1935 ms on node2.iisc.ac.in (executor 5) (51/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 59.0 in stage 0.0 (TID 59) in 1929 ms on node2.iisc.ac.in (executor 5) (52/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 91.0 in stage 0.0 (TID 91) in 1978 ms on node3.iisc.ac.in (executor 19) (53/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 39.0 in stage 0.0 (TID 39) in 1988 ms on node3.iisc.ac.in (executor 19) (54/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 65.0 in stage 0.0 (TID 65) in 1983 ms on node3.iisc.ac.in (executor 19) (55/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 13.0 in stage 0.0 (TID 13) in 1996 ms on node3.iisc.ac.in (executor 19) (56/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 63.0 in stage 0.0 (TID 63) in 2017 ms on node6.iisc.ac.in (executor 26) (57/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 11.0 in stage 0.0 (TID 11) in 2032 ms on node6.iisc.ac.in (executor 26) (58/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 89.0 in stage 0.0 (TID 89) in 2013 ms on node6.iisc.ac.in (executor 26) (59/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 37.0 in stage 0.0 (TID 37) in 2024 ms on node6.iisc.ac.in (executor 26) (60/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 72.0 in stage 0.0 (TID 72) in 2027 ms on node6.iisc.ac.in (executor 20) (61/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 20.0 in stage 0.0 (TID 20) in 2039 ms on node6.iisc.ac.in (executor 20) (62/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 46.0 in stage 0.0 (TID 46) in 2033 ms on node6.iisc.ac.in (executor 20) (63/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 98.0 in stage 0.0 (TID 98) in 2024 ms on node6.iisc.ac.in (executor 20) (64/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 80.0 in stage 0.0 (TID 80) in 2033 ms on node6.iisc.ac.in (executor 2) (65/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 28.0 in stage 0.0 (TID 28) in 2044 ms on node6.iisc.ac.in (executor 2) (66/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 2.0 in stage 0.0 (TID 2) in 2054 ms on node6.iisc.ac.in (executor 2) (67/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 54.0 in stage 0.0 (TID 54) in 2039 ms on node6.iisc.ac.in (executor 2) (68/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 49.0 in stage 0.0 (TID 49) in 2063 ms on node6.iisc.ac.in (executor 14) (69/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 23.0 in stage 0.0 (TID 23) in 2070 ms on node6.iisc.ac.in (executor 14) (70/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 75.0 in stage 0.0 (TID 75) in 2059 ms on node6.iisc.ac.in (executor 14) (71/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 101.0 in stage 0.0 (TID 101) in 2054 ms on node6.iisc.ac.in (executor 14) (72/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 22.0 in stage 0.0 (TID 22) in 2105 ms on node3.iisc.ac.in (executor 7) (73/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 48.0 in stage 0.0 (TID 48) in 2100 ms on node3.iisc.ac.in (executor 7) (74/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 100.0 in stage 0.0 (TID 100) in 2090 ms on node3.iisc.ac.in (executor 7) (75/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 74.0 in stage 0.0 (TID 74) in 2095 ms on node3.iisc.ac.in (executor 7) (76/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 47.0 in stage 0.0 (TID 47) in 2100 ms on node6.iisc.ac.in (executor 8) (77/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 73.0 in stage 0.0 (TID 73) in 2096 ms on node6.iisc.ac.in (executor 8) (78/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 99.0 in stage 0.0 (TID 99) in 2091 ms on node6.iisc.ac.in (executor 8) (79/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 21.0 in stage 0.0 (TID 21) in 2108 ms on node6.iisc.ac.in (executor 8) (80/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 94.0 in stage 0.0 (TID 94) in 2148 ms on node3.iisc.ac.in (executor 1) (81/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 16.0 in stage 0.0 (TID 16) in 2166 ms on node3.iisc.ac.in (executor 1) (82/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 42.0 in stage 0.0 (TID 42) in 2160 ms on node3.iisc.ac.in (executor 1) (83/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 68.0 in stage 0.0 (TID 68) in 2154 ms on node3.iisc.ac.in (executor 1) (84/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 60.0 in stage 0.0 (TID 60) in 2216 ms on node3.iisc.ac.in (executor 13) (85/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 86.0 in stage 0.0 (TID 86) in 2211 ms on node3.iisc.ac.in (executor 13) (86/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 34.0 in stage 0.0 (TID 34) in 2222 ms on node3.iisc.ac.in (executor 13) (87/104)
+26/03/06 21:08:32 INFO TaskSetManager: Finished task 8.0 in stage 0.0 (TID 8) in 2231 ms on node3.iisc.ac.in (executor 13) (88/104)
