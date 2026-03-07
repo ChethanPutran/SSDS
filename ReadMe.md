@@ -136,7 +136,7 @@ During execution, you can monitor progress through:
 
 For local browser access to Spark UI:
 ```bash
-ssh -L 8088:<server_ip>:8088 -L 8088:localhost:8088 chethan1@10.24.1.10
+ssh -L 8088:192.168.1.1:8088 chethan1@10.24.1.10
 ```
 
 ### Output Files
@@ -202,7 +202,7 @@ yarn queue -status root.ds256.team8
 yarn logs -applicationId <application_id>
 
 # List running applications
-yarn application -list | grep chethan1
+yarn application -list
 ```
 
 ## Contributing
