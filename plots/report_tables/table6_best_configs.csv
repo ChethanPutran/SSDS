@@ -1,0 +1,4 @@
+Experiment,Executors,Cores/Executor,TotalCores,RuntimeSec,Efficiency%,PeakHeapGB,MemSpillGB
+Strong Scaling,16,4,64,335.91633333333334,37.5,2.67,4.0
+Weak Scaling (2 cores/exec),1,2,2,1877.5253333333333,N/A,2.76,0.0
+Weak Scaling (4 cores/exec),2,4,8,727.7226666666667,N/A,2.84,1.95

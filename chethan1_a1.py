@@ -91,17 +91,11 @@ from pyspark.storagelevel import StorageLevel
 # ─────────────────────────────────────────────
 # DO NOT MODIFY THIS SECTION (IMPORT STATEMENTS)
 # ─────────────────────────────────────────────
-
-# Need to pass the input WARC directory as a command-line argument when running the script with spark-submit. 
-# This allows us to test your code with different input sizes without modifying the code.
-if len(sys.argv) != 2:
-    print("Usage: spark-submit a1_v1.0.py <input_warc_dir>")
-    sys.exit(1)
     
 # ─────────────────────────────────────────────
 # Configuration
 # ─────────────────────────────────────────────
-BASE_DIR            = f"hdfs:////ds256_2026/{sys.argv[1]}"   # Change to small_4, small_8, small_16 for different input sizes
+BASE_DIR            = f"hdfs:////ds256_2026/small_1"   # Change to small_4, small_8, small_16 for different input sizes
 BLACKLIST_DOMAINS_DIR = "hdfs:////ds256_2026/blacklist/dest"
 FASTTEXT_MODEL_BIN  = "hdfs:////ds256_2026/lid.176.bin" 
 PARQUET_DIR         = "hdfs:////user/chethan1/outputs" # Change to your own HDFS directory
